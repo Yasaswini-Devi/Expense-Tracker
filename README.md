@@ -31,3 +31,48 @@ Before you begin, ensure you have met the following requirements:
    git clone <repository-url>
    cd <project-folder>
    ```
+
+2. Install Backend Dependencies:
+
+   Navigate to the backend folder and install the required dependencies:   
+   ```bash
+   cd backend
+   npm install
+   ```
+
+3. Install Frontend Dependencies:
+
+   Navigate to the frontend folder and install the required dependencies:
+   ```bash
+   cd ../frontend
+   npm install
+   ```
+
+4. Configure MongoDB:
+
+   Make sure your MongoDB database is set up (either locally or using MongoDB Atlas). Update the MongoDB URI in the backend code where necessary.
+
+5. Run the Application:
+
+   To run the application locally:
+
+   Start the backend server:
+   ```bash
+   cd backend
+   npm start
+   ```
+
+7. Start the frontend server:
+
+   ```bash
+   cd ../frontend
+   npm start
+   ```
+
+   Your application will be available at http://localhost:3000.
+
+Usage
+
+   Add Expense: Fill out the form with a title, amount, and category, then click "Add Expense."
+   View Expenses: Switch between the table and chart view to visualize your expenses.
+   Delete Expenses: Select multiple expenses and click "Delete Selected" to remove them from the list.
