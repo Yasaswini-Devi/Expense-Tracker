@@ -22,7 +22,7 @@ const Login = () => {
     try {
       const res = await login(formData);
       localStorage.setItem("token", res.data.token); // Save token
-      navigate("/"); // Go to home or dashboard
+      navigate("/dashboard"); // Go to home or dashboard
     } catch (err) {
       setError(err.response?.data?.message || "Something went wrong");
     }
