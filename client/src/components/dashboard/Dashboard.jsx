@@ -3,7 +3,7 @@ import axios from "axios";
 import ExpenseForm from "./ExpenseForm";
 import ExpenseChart from "./ExpenseChart";
 import ExpenseList from "./ExpenseList";
-import { createExpense, updateExpense, deleteExpense, getExpenses } from "../../services/ExpenseService";
+import { getExpenses } from "../../services/ExpenseService";
 
 const Dashboard = () => {
   const [expenses, setExpenses] = useState([]);
