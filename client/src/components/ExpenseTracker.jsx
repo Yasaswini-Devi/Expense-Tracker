@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import ExpenseForm from "./ExpenseForm";
-import ExpenseChart from "./ExpenseChart";
-import ExpenseList from "./ExpenseList";
+import ExpenseForm from "./dashboard/ExpenseForm";
+import ExpenseChart from "./dashboard/ExpenseChart";
+import ExpenseList from "./dashboard/ExpenseList";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 const ExpenseTracker = () => {
