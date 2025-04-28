@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { createExpense } from "../../services/ExpenseService";
 
 const ExpenseForm = ({ fetchExpenses }) => {
   const [title, setTitle] = useState("");
@@ -9,11 +10,12 @@ const ExpenseForm = ({ fetchExpenses }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:5000/api/expenses/add", {
+      const token = localStorage.getItem("token");
+      await createExpense({
         title,
         amount,
         category,
-      });
+      }, token);
 
       fetchExpenses(); // Refresh the list after adding
 
