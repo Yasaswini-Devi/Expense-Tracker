@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import ExpenseForm from "./dashboard/ExpenseForm";
-import ExpenseChart from "./dashboard/ExpenseChart";
-import ExpenseList from "./dashboard/ExpenseList";
+import ExpenseForm from "./ExpenseForm";
+import ExpenseChart from "./ExpenseChart";
+import ExpenseList from "./ExpenseList";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-const ExpenseTracker = () => {
+const Dashboard = () => {
   const [expenses, setExpenses] = useState([]);
   const [view, setView] = useState("table"); // "table" or "chart"
 
@@ -55,4 +55,4 @@ const ExpenseTracker = () => {
   );
 };
 
-export default ExpenseTracker;
+export default Dashboard;
