@@ -3,7 +3,7 @@ import axios from "axios";
 import ExpenseForm from "./ExpenseForm";
 import ExpenseChart from "./ExpenseChart";
 import ExpenseList from "./ExpenseList";
-import "bootstrap/dist/css/bootstrap.min.css";
+import { createExpense, updateExpense, deleteExpense, getExpenses } from "../../services/ExpenseService";
 
 const Dashboard = () => {
   const [expenses, setExpenses] = useState([]);
@@ -11,8 +11,9 @@ const Dashboard = () => {
 
   const fetchExpenses = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/api/expenses/all");
-      setExpenses(response.data);
+      const token = localStorage.getItem("token"); // get token from localStorage
+      const data = await getExpenses(token);
+      setExpenses(data);
     } catch (error) {
       console.error("Error fetching expenses:", error);
     }
