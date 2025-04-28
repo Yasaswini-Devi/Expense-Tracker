@@ -36,7 +36,7 @@ Before you begin, ensure you have met the following requirements:
 
    Navigate to the backend folder and install the required dependencies:   
    ```bash
-   cd backend
+   cd server
    npm install
    ```
 
@@ -44,7 +44,7 @@ Before you begin, ensure you have met the following requirements:
 
    Navigate to the frontend folder and install the required dependencies:
    ```bash
-   cd ../frontend
+   cd ../client
    npm install
    ```
 
@@ -58,15 +58,15 @@ Before you begin, ensure you have met the following requirements:
 
    Start the backend server:
    ```bash
-   cd backend
-   npm start
+   cd server
+   nodemon server.js
    ```
 
 7. Start the frontend server:
 
    ```bash
-   cd ../frontend
-   npm start
+   cd ../client
+   npm run dev
    ```
 
    Your application will be available at http://localhost:3000.
