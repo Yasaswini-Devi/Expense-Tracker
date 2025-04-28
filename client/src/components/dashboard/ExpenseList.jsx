@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { deleteExpense } from "../../services/ExpenseService";
 
 const ExpenseList = ({ expenses, setExpenses }) => {
   const [selectedExpenses, setSelectedExpenses] = useState([]);
@@ -17,9 +18,10 @@ const ExpenseList = ({ expenses, setExpenses }) => {
   // Handle bulk delete
   const handleDeleteSelected = async () => {
     try {
+      const token = localStorage.getItem("token");
       await Promise.all(
-        selectedExpenses.map((id) =>
-          axios.delete(`http://localhost:5000/api/expenses/${id}`)
+        selectedExpenses.map((id) => 
+          deleteExpense(id, token)
         )
       );
 
