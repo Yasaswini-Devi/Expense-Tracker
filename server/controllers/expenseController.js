@@ -2,8 +2,8 @@ import Expense from "../models/Expense.js";
 
 export const addExpense = async (req, res) => {
   try {
-    const { title, amount, date } = req.body;
-    const newExpense = new Expense({ title, amount, date, user: req.user.id });
+    const { title, amount, category, date } = req.body;
+    const newExpense = new Expense({ title, amount, category, date, user: req.user.id });
     await newExpense.save();
     res.status(201).json(newExpense);
   } catch (error) {
