@@ -1,0 +1,149 @@
+/* ====================
+   Global Styles
+==================== */
+
+/* Old Paper Background */
+body {
+    background-color: #FAEBD7; /* Antique White / Light Peach */
+    font-family: 'Arial', sans-serif;
+    color: #333333; /* Regular dark text */
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+  }
+  
+  /* ====================
+     Color Palette
+  ==================== */
+  
+  /* Primary Color: Burgundy */
+  :root {
+    --primary-color: #800020;    /* Deep Burgundy */
+    --primary-light: #A23E48;    /* Soft Burgundy for buttons */
+    --secondary-color: #C9A86A;  /* Muted Gold */
+    --text-color: #333333;       /* Standard text */
+    --subtle-text: #5C5C5C;      /* Secondary text */
+    --background-color: #FAEBD7; /* Page background (old paper) */
+    --component-bg: #FFF8F0;     /* Light component/card background */
+    --header-text: #FFFFFF;      /* White text */
+    --shadow-color: rgba(0, 0, 0, 0.1); /* Soft shadow */
+  }
+  
+  /* ====================
+     Header
+  ==================== */
+  
+  .header {
+    background-color: var(--primary-color);
+    color: var(--header-text);
+    text-align: center;
+    font-size: 1rem;
+    font-weight: bold;
+    padding: 1rem 0;
+    box-shadow: 0 2px 6px var(--shadow-color);
+  }
+  
+  /* ====================
+     Buttons
+  ==================== */
+  
+  /* Primary Button */
+  .primary-btn {
+    background-color: var(--primary-light);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 10px 24px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .primary-btn:hover {
+    background-color: #8B2E3B; /* Slightly darker burgundy */
+    box-shadow: 0 4px 12px var(--shadow-color);
+  }
+  
+  /* Secondary Button */
+  .secondary-btn {
+    background-color: var(--secondary-color);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 10px 24px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .secondary-btn:hover {
+    background-color: #B98F52; /* Slightly darker muted gold */
+    box-shadow: 0 4px 12px var(--shadow-color);
+  }
+  
+  /* ====================
+     Typography
+  ==================== */
+  
+  h1, h2, h3, h4, h5 {
+    color: var(--primary-color);
+  }
+  
+  p, span {
+    color: var(--text-color);
+  }
+  
+  /* Optional: Secondary text styling */
+  .secondary-text {
+    color: var(--subtle-text);
+    font-size: 0.9rem;
+  }
+  
+  /* ====================
+     Home Page Styling
+  ==================== */
+  
+  .home-container {
+    background-color: var(--background-color);
+    padding: 2rem;
+    text-align: center;
+    width: 75%;
+  }
+  
+  .home-container h1 {
+    color: var(--primary-color);
+  }
+  
+  .home-container p {
+    color: var(--subtle-text);
+  }
+  
+  /* ====================
+     Components / Cards
+  ==================== */
+  
+  .card {
+    background-color: var(--component-bg);
+    border-radius: 10px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 8px var(--shadow-color);
+  }
+  
+  /* ====================
+     Utility Classes
+  ==================== */
+  
+  .shadow-sm {
+    box-shadow: 0 2px 4px var(--shadow-color);
+  }
+  
+  .text-primary {
+    color: var(--primary-color) !important;
+  }
+  
+  .bg-paper {
+    background-color: var(--component-bg);
+  }
+  
