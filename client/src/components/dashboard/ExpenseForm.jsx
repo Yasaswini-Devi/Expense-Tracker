@@ -75,7 +75,7 @@ const ExpenseForm = ({ fetchExpenses }) => {
         />
       </div>
 
-      <button type="submit" className="btn btn-primary w-100">
+      <button type="submit" className="btn primary-btn w-100">
         Add Expense
       </button>
     </form>

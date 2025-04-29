@@ -28,7 +28,7 @@ const Dashboard = () => {
       <div className="row">
         {/* Expense Form (4 columns) */}
         <div className="col-md-4">
-          <div className="p-3 border rounded bg-light">
+          <div className="card p-3">
             <h4 className="text-center">Add Expense</h4>
             <ExpenseForm fetchExpenses={fetchExpenses} />
           </div>
@@ -38,12 +38,12 @@ const Dashboard = () => {
         <div className="col-md-8">
           {/* Centered Toggle Button */}
           <div className="d-flex justify-content-center mb-3">
-            <button className="btn btn-primary" onClick={() => setView(view === "table" ? "chart" : "table")}>
+            <button className="btn primary-btn" onClick={() => setView(view === "table" ? "chart" : "table")}>
               Switch to {view === "table" ? "Chart" : "Table"} View
             </button>
           </div>
 
-          <div className="border rounded p-3 bg-white">
+          <div className="border rounded p-3 card">
             {view === "table" ? (
               <ExpenseList expenses={expenses} setExpenses={setExpenses} />
             ) : (
