@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import axios from "axios";
 import { createExpense } from "../../services/ExpenseService";
 
 const ExpenseForm = ({ fetchExpenses }) => {
   const [title, setTitle] = useState("");
   const [amount, setAmount] = useState("");
   const [category, setCategory] = useState("");
+  const [date, setDate] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -17,9 +17,8 @@ const ExpenseForm = ({ fetchExpenses }) => {
         category,
       }, token);
 
-      fetchExpenses(); // Refresh the list after adding
+      fetchExpenses(); 
 
-      // Clear input fields after submission
       setTitle("");
       setAmount("");
       setCategory("");
@@ -63,6 +62,16 @@ const ExpenseForm = ({ fetchExpenses }) => {
           value={category}
           onChange={(e) => setCategory(e.target.value)}
           required
+        />
+      </div>
+
+      <div className="mb-3">
+        <label className="form-label">Date</label>
+        <input
+          type="date"
+          className="form-control"
+          value={date}
+          onChange={(e) => setDate(e.target.value)}
         />
       </div>
 
