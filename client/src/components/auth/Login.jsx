@@ -29,13 +29,20 @@ const Login = () => {
   };
 
   return (
-    <div className="container mt-5">
-      <h2>Login</h2>
+    <div className="w-50 mx-auto card mt-5">
+      <h2 className="m-auto mb-5">Login</h2>
       {error && <div className="alert alert-danger">{error}</div>}
       <form onSubmit={handleSubmit}>
         <input className="form-control mb-2" type="email" name="email" placeholder="Email" onChange={handleChange} />
         <input className="form-control mb-2" type="password" name="password" placeholder="Password" onChange={handleChange} />
-        <button className="btn btn-success" type="submit">Login</button>
+        <div className="d-flex justify-content-center">
+          <button
+            className="btn primary-btn btn-lg shadow-sm mt-3"
+            type="submit"
+          >
+            Login
+          </button>
+        </div>
       </form>
     </div>
   );

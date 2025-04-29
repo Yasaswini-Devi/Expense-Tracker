@@ -28,14 +28,21 @@ const Signup = () => {
   };
 
   return (
-    <div className="container mt-5">
-      <h2>Signup</h2>
+    <div className="w-50 mx-auto card mt-5">
+      <h2 className="mb-5 mx-auto">Signup</h2>
       {error && <div className="alert alert-danger">{error}</div>}
       <form onSubmit={handleSubmit}>
         <input className="form-control mb-2" type="text" name="username" placeholder="Username" onChange={handleChange} />
         <input className="form-control mb-2" type="email" name="email" placeholder="Email" onChange={handleChange} />
         <input className="form-control mb-2" type="password" name="password" placeholder="Password" onChange={handleChange} />
-        <button className="btn btn-primary" type="submit">Register</button>
+        <div className="d-flex justify-content-center">
+          <button
+            className="btn primary-btn btn-lg shadow-sm mt-3"
+            type="submit"
+          >
+            Register
+          </button>
+        </div>
       </form>
     </div>
   );
