@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { createExpense } from "../../services/ExpenseService";
 
-const ExpenseForm = ({ fetchExpenses }) => {
+const ExpenseForm = ({ fetchExpenses, fetchCategories }) => {
   const [title, setTitle] = useState("");
   const [amount, setAmount] = useState("");
   const [category, setCategory] = useState("");
@@ -18,6 +18,7 @@ const ExpenseForm = ({ fetchExpenses }) => {
       }, token);
 
       fetchExpenses(); 
+      fetchCategories();
 
       setTitle("");
       setAmount("");

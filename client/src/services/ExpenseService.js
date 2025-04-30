@@ -1,7 +1,7 @@
 import axios from "axios";
 
 // Set your API URL (adjust if you have backend on a different port)
-const API_URL = import.meta.env.VITE_API_URL + "expenses/" || "http://localhost:5000/api/expenses/";
+const API_URL = import.meta.env.VITE_API_URL + "expenses" || "http://localhost:5000/api/expenses";
 
 // Create Expense
 export const createExpense = async (expenseData, token) => {
@@ -14,15 +14,25 @@ export const createExpense = async (expenseData, token) => {
 };
 
 // Get All Expenses
-export const getExpenses = async (token) => {
-  const response = await axios.get(API_URL, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
-  console.log(response.data);
-  return response.data;
+export const getExpenses = async (filters = {}, token) => {
+  console.log("Calling getExpenses with:", filters); // ✅ Check this
+  console.log("Type of filters:", typeof filters);
+
+  try {
+    const response = await axios.get(API_URL, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      params: filters,
+    });
+    return response.data;
+  } catch (error) {
+    console.error("🚨 Error in getExpenses:", error.message);
+    console.error("Full error object:", error);
+    throw error;
+  }
 };
+
 
 // Delete Expense
 export const deleteExpense = async (expenseId, token) => {
@@ -43,3 +53,13 @@ export const updateExpense = async (expenseId, updatedData, token) => {
   });
   return response.data;
 };
+
+export const getCategories = async (token) => {
+  const response = await axios.get(`${API_URL}/categories`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return response.data;
+};
+
