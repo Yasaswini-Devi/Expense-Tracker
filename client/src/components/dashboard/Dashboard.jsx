@@ -14,6 +14,7 @@ const Dashboard = () => {
     category: 'All',
   });
   const [categories, setCategories] = useState([]);
+  const [appliedFilters, setAppliedFilters] = useState([]);
 
   const fetchExpenses = async () => {
     try {
@@ -45,6 +46,12 @@ const Dashboard = () => {
     const token = localStorage.getItem("token");
     const data = await getExpenses(filters, token);
     setExpenses(data);
+
+    const newFilters = [];
+    if (filters.startDate) newFilters.push(`Start Date: ${filters.startDate}`);
+    if (filters.endDate) newFilters.push(`End Date: ${filters.endDate}`);
+    if (filters.category !== 'All') newFilters.push(`Category: ${filters.category}`);
+    setAppliedFilters(newFilters);
   };  
 
   const clearFilters = async () => {
@@ -53,6 +60,8 @@ const Dashboard = () => {
       endDate: '',
       category: 'All',
     });
+
+    setAppliedFilters([]);
     await fetchExpenses(); // Reload all expenses
   };
 
@@ -131,6 +140,19 @@ const Dashboard = () => {
               <button onClick={applyFilters} className="btn primary-btn">Apply</button>
               <button onClick={clearFilters} className="btn secondary-btn">Clear Filters</button>
             </div>
+
+            {appliedFilters.length > 0 && (
+              <div className="mt-3">
+                <h5>Applied Filters:</h5>
+                <div className="d-flex flex-wrap">
+                  {appliedFilters.map((filter, index) => (
+                    <span key={index} className="badge me-2">
+                      {filter}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
             
             {view === "table" ? (
               <ExpenseList expenses={expenses} setExpenses={setExpenses} />
