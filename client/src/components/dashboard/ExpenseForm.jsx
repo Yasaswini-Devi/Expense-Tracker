@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { createExpense } from "../../services/ExpenseService";
+import { getBudget } from "../../services/BudgetService";
+import { getMonthlyTotals } from "../../services/ExpenseService";
 
 const ExpenseForm = ({ fetchExpenses, fetchCategories }) => {
   const [title, setTitle] = useState("");
@@ -11,18 +13,48 @@ const ExpenseForm = ({ fetchExpenses, fetchCategories }) => {
     e.preventDefault();
     try {
       const token = localStorage.getItem("token");
-      await createExpense({
-        title,
-        amount,
-        category,
-      }, token);
 
-      fetchExpenses(); 
+      // Extract month/year
+      const dateObj = new Date(date);
+      const month = dateObj.getMonth() + 1;
+      const year = dateObj.getFullYear();
+
+      // Fetch budget and monthly totals
+      const [budgetData, totals] = await Promise.all([
+        getBudget(month, year, token),
+        getMonthlyTotals(month, year, token),
+      ]);
+
+      const categoryBudget = budgetData.budgets[category];
+      const currentTotal = totals[category] || 0;
+      const newTotal = currentTotal + Number(amount);
+
+      if (categoryBudget) {
+        if (newTotal > categoryBudget) {
+          alert(`⚠️ This expense exceeds your budget for "${category}"!`);
+        } else if (newTotal > 0.9 * categoryBudget) {
+          alert(`⚠️ You're close to exceeding your budget for "${category}".`);
+        }
+      }
+
+      // Add the expense anyway
+      await createExpense(
+        {
+          title,
+          amount,
+          category,
+          date,
+        },
+        token
+      );
+
+      fetchExpenses();
       fetchCategories();
 
       setTitle("");
       setAmount("");
       setCategory("");
+      setDate("");
     } catch (error) {
       console.error("Error adding expense:", error);
     }
@@ -73,6 +105,7 @@ const ExpenseForm = ({ fetchExpenses, fetchCategories }) => {
           className="form-control"
           value={date}
           onChange={(e) => setDate(e.target.value)}
+          required
         />
       </div>
 

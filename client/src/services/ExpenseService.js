@@ -63,3 +63,9 @@ export const getCategories = async (token) => {
   return response.data;
 };
 
+export const getMonthlyTotals = async (month, year, token) => {
+  const res = await axios.get(`${API_URL}/monthly-totals?month=${month}&year=${year}`, {
+    headers: { Authorization: `Bearer ${token}` }
+  });
+  return res.data;
+};

@@ -24,7 +24,7 @@ body {
     --text-color: #333333;       /* Standard text */
     --subtle-text: #5C5C5C;      /* Secondary text */
     --background-color: #e7e7e7; /* Page background (old paper) */
-    --component-bg: #F5fffa;    /* Light component/card background */
+    --component-bg: #Fafafa;    /* Light component/card background */
     --header-text: #F4f0ec;      /* White text */
     --shadow-color: rgba(0, 0, 0, 0.1); /* Soft shadow */
   }
