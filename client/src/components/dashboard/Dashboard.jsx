@@ -3,6 +3,7 @@ import axios from "axios";
 import ExpenseForm from "./ExpenseForm";
 import ExpenseChart from "./ExpenseChart";
 import ExpenseList from "./ExpenseList";
+import BudgetForm from "./BudgetForm";
 import { getExpenses, getCategories } from "../../services/ExpenseService";
 
 const Dashboard = () => {
@@ -82,6 +83,8 @@ const Dashboard = () => {
               fetchCategories={fetchCategories} 
             />
           </div>
+          <BudgetForm categories={categories} />
+
         </div>
 
         {/* Expense Table/Chart (8 columns) */}

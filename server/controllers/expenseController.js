@@ -13,7 +13,6 @@ export const addExpense = async (req, res) => {
 
 export const getExpenses = async (req, res) => {
   try {
-    console.log(req)
     const { startDate, endDate, category } = req.query;
 
     const filter = {

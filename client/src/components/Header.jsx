@@ -7,7 +7,7 @@ const Header = () => {
     <nav className="header navbar navbar-expand-lg shadow-sm">
       <div className="container">
         {/* Logo Section */}
-        <Link className="navbar-brand text-white" to="/">
+        <Link className="navbar-brand text-white" to="/dashboard">
           <strong>Expense Tracker</strong>
         </Link>
 
