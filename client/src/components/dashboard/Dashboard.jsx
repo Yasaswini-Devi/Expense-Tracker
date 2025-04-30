@@ -47,6 +47,15 @@ const Dashboard = () => {
     setExpenses(data);
   };  
 
+  const clearFilters = async () => {
+    setFilters({
+      startDate: '',
+      endDate: '',
+      category: 'All',
+    });
+    await fetchExpenses(); // Reload all expenses
+  };
+
   useEffect(() => {
     fetchExpenses();
     fetchCategories();
@@ -76,33 +85,53 @@ const Dashboard = () => {
           </div>
 
           <div className="border rounded p-3 card">
-          <input
-            type="date"
-            name="startDate"
-            value={filters.startDate}
-            onChange={(e) => setFilters({ ...filters, startDate: e.target.value })}
-          />
+          <div class="d-flex justify-content-evenly">
+            <div class="d-flex flex-column align-items-center">
+              <label for="startDate">Start Date</label>
+              <input
+                type="date"
+                id="startDate"
+                name="startDate"
+                value={filters.startDate}
+                onChange={(e) => setFilters({ ...filters, startDate: e.target.value })}
+                class="form-control"
+              />
+            </div>
 
-          <input
-            type="date"
-            name="endDate"
-            value={filters.endDate}
-            onChange={(e) => setFilters({ ...filters, endDate: e.target.value })}
-          />
+            <div class="d-flex flex-column align-items-center">
+              <label for="endDate">End Date</label>
+              <input
+                type="date"
+                id="endDate"
+                name="endDate"
+                value={filters.endDate}
+                onChange={(e) => setFilters({ ...filters, endDate: e.target.value })}
+                class="form-control"
+              />
+            </div>
 
-          <select
-            name="category"
-            value={filters.category}
-            onChange={(e) => setFilters({ ...filters, category: e.target.value })}
-          >
-            <option value="All">All</option>
-            {categories.map((cat) => (
-              <option key={cat} value={cat}>{cat}</option>
-            ))}
-          </select>
+            <div class="d-flex flex-column align-items-center">
+              <label for="category">Category</label>
+              <select
+                id="category"
+                name="category"
+                value={filters.category}
+                onChange={(e) => setFilters({ ...filters, category: e.target.value })}
+                class="form-control"
+              >
+                <option value="All">All</option>
+                {categories.map((cat) => (
+                  <option key={cat} value={cat}>{cat}</option>
+                ))}
+              </select>
+            </div>
+          </div>
 
-          <button onClick={applyFilters}>Apply</button>
-
+            <div className="mt-3 d-flex justify-content-evenly">
+              <button onClick={applyFilters} className="btn primary-btn">Apply</button>
+              <button onClick={clearFilters} className="btn secondary-btn">Clear Filters</button>
+            </div>
+            
             {view === "table" ? (
               <ExpenseList expenses={expenses} setExpenses={setExpenses} />
             ) : (
