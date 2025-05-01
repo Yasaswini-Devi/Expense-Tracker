@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import ExpenseForm from "./ExpenseForm";
 import ExpenseChart from "./ExpenseChart";
 import ExpenseList from "./ExpenseList";
 import BudgetForm from "./BudgetForm";
+import MonthlySummary from "./Summary";
 import { getExpenses, getCategories } from "../../services/ExpenseService";
 
 const Dashboard = () => {
@@ -84,7 +84,7 @@ const Dashboard = () => {
             />
           </div>
           <BudgetForm categories={categories} />
-
+          <MonthlySummary></MonthlySummary>
         </div>
 
         {/* Expense Table/Chart (8 columns) */}
