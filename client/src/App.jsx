@@ -1,12 +1,13 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Login from "./components/auth/Login";
-import Signup from "./components/auth/Signup";
-import Home from "./components/Home";
+import Login from "./pages/auth/Login";
+import Signup from "./pages/auth/Signup";
+import Home from "./pages/Home";
 import "bootstrap/dist/css/bootstrap.min.css";
-import Dashboard from "./components/dashboard/Dashboard";
+import Dashboard from "./pages/features/Dashboard";
 import Header from "./components/Header";
 import "./App.css";
+import MonthlySummary from "./pages/features/Summary";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/summary" element={<MonthlySummary />} />
         </Routes>
     </Router>
   );

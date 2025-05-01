@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
-import ExpenseForm from "./ExpenseForm";
-import ExpenseChart from "./ExpenseChart";
-import ExpenseList from "./ExpenseList";
-import BudgetForm from "./BudgetForm";
-import MonthlySummary from "./Summary";
+import ExpenseForm from "../../components/dashboard/ExpenseForm";
+import ExpenseChart from "../../components/dashboard/ExpenseChart";
+import ExpenseList from "../../components/dashboard/ExpenseList";
+import BudgetForm from "../../components/dashboard/BudgetForm";
 import { getExpenses, getCategories } from "../../services/ExpenseService";
 
 const Dashboard = () => {
@@ -84,7 +83,6 @@ const Dashboard = () => {
             />
           </div>
           <BudgetForm categories={categories} />
-          <MonthlySummary></MonthlySummary>
         </div>
 
         {/* Expense Table/Chart (8 columns) */}
