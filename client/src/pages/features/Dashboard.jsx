@@ -105,14 +105,14 @@ const Dashboard = () => {
     <div className="container mt-4">
       {/* Row 1: ExpenseForm and BudgetForm side by side */}
       <div className="row mb-4">
-        <div className="col-md-6">
-          <div className="card p-3">
+        <div className="col-md-6 d-flex">
+          <div className="card p-3 w-100 h-100">
             <h5 className="text-center">Add Expense</h5>
             <ExpenseForm fetchExpenses={fetchExpenses} fetchCategories={fetchCategories} />
           </div>
         </div>
-        <div className="col-md-6">
-          <div className="card p-3">
+        <div className="col-md-6 d-flex">
+          <div className="card p-3 w-100 h-100">
             <h5 className="text-center">Set Budget</h5>
             <BudgetForm categories={categories} />
           </div>

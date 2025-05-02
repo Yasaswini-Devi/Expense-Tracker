@@ -34,27 +34,50 @@ const BudgetForm = ({ categories }) => {
   };
 
   return (
-    <div className="card p-3 mb-4">
-      <h4>Set Monthly Budget</h4>
-      <div className="d-flex gap-2">
-        <input type="number" value={month} onChange={(e) => setMonth(Number(e.target.value))} min={1} max={12} />
-        <input type="number" value={year} onChange={(e) => setYear(Number(e.target.value))} />
-      </div>
-
-      {categories.map((cat) => (
-        <div key={cat} className="mt-2">
-          <label>{cat}</label>
-          <input
-            type="number"
-            value={budgets[cat] || ""}
-            onChange={(e) => handleChange(cat, e.target.value)}
-            className="form-control"
-          />
-        </div>
-      ))}
-
-      <button onClick={handleSubmit} className="btn btn-primary mt-3">Save Budget</button>
+    <form onSubmit={(e) => { e.preventDefault(); handleSubmit(); }} className="p-3">
+  <div className="row mb-3">
+    <div className="col">
+      <label className="form-label">Month</label>
+      <input
+        type="number"
+        className="form-control"
+        value={month}
+        onChange={(e) => setMonth(Number(e.target.value))}
+        min={1}
+        max={12}
+        required
+      />
     </div>
+    <div className="col">
+      <label className="form-label">Year</label>
+      <input
+        type="number"
+        className="form-control"
+        value={year}
+        onChange={(e) => setYear(Number(e.target.value))}
+        required
+      />
+    </div>
+  </div>
+
+  {categories.map((cat) => (
+    <div className="mb-3" key={cat}>
+      <label className="form-label">{cat} Budget</label>
+      <input
+        type="number"
+        className="form-control"
+        value={budgets[cat] || ""}
+        onChange={(e) => handleChange(cat, e.target.value)}
+        placeholder={`Enter budget for ${cat}`}
+      />
+    </div>
+  ))}
+
+  <button type="submit" className="btn primary-btn w-100 mt-2">
+    Save Budget
+  </button>
+</form>
+
   );
 };
 
