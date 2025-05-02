@@ -11,10 +11,11 @@ const Dashboard = () => {
   const [filters, setFilters] = useState({
     startDate: '',
     endDate: '',
-    category: 'All',
-  });
+    category: [], // <-- array of selected categories
+  });  
   const [categories, setCategories] = useState([]);
   const [appliedFilters, setAppliedFilters] = useState([]);
+  const [showDropdown, setShowDropdown] = useState(false);
 
   const fetchExpenses = async () => {
     try {
@@ -37,34 +38,35 @@ const Dashboard = () => {
     }
   }
 
-  const applyFilters = async () => {
-    const params = {
-      startDate: filters.startDate,
-      endDate: filters.endDate,
-      category: filters.category !== 'All' ? filters.category : undefined,
-    };
-    const token = localStorage.getItem("token");
-    const data = await getExpenses(filters, token);
-    setExpenses(data);
-
-    const newFilters = [];
-    if (filters.startDate) newFilters.push(`Start Date: ${filters.startDate}`);
-    if (filters.endDate) newFilters.push(`End Date: ${filters.endDate}`);
-    if (filters.category !== 'All') newFilters.push(`Category: ${filters.category}`);
-    setAppliedFilters(newFilters);
-  };  
-
   const clearFilters = async () => {
     setFilters({
       startDate: '',
       endDate: '',
-      category: 'All',
+      category: [],
     });
-
+  
     setAppliedFilters([]);
     await fetchExpenses(); // Reload all expenses
   };
-
+ 
+  const applyFilters = async () => {
+    const token = localStorage.getItem("token");
+    const data = await getExpenses(filters, token);
+    setExpenses(data);
+  
+    const newFilters = [];
+  
+    if (filters.startDate) newFilters.push({ type: 'startDate', value: filters.startDate });
+    if (filters.endDate) newFilters.push({ type: 'endDate', value: filters.endDate });
+    if (filters.category.length > 0) {
+      filters.category.forEach((cat) =>
+        newFilters.push({ type: 'category', value: cat })
+      );
+    }
+  
+    setAppliedFilters(newFilters);
+  };
+  
   useEffect(() => {
     fetchExpenses();
     fetchCategories();
@@ -74,28 +76,29 @@ const Dashboard = () => {
     applyFilters();
   }, [filters]);
  
-  const removeFilter = async (filter) => {
-    const newFilters = { ...filters };
+  const handleRemoveFilter = (filterToRemove) => {
+    // Remove from appliedFilters
+    const newApplied = appliedFilters.filter(
+      (f) => !(f.type === filterToRemove.type && f.value === filterToRemove.value)
+    );
+    setAppliedFilters(newApplied);
   
-    if (filter.startsWith("Start Date:")) {
-      newFilters.startDate = '';
-    } else if (filter.startsWith("End Date:")) {
-      newFilters.endDate = '';
-    } else if (filter.startsWith("Category:")) {
-      newFilters.category = 'All';
-    }
+    // Update filters state
+    setFilters((prev) => {
+      const updated = { ...prev };
   
-    setFilters(newFilters);
+      if (filterToRemove.type === 'category') {
+        updated.category = prev.category.filter((c) => c !== filterToRemove.value);
+      } else if (filterToRemove.type === 'startDate') {
+        updated.startDate = '';
+      } else if (filterToRemove.type === 'endDate') {
+        updated.endDate = '';
+      }
   
-    // Re-apply filters after removal
-    const newAppliedFilters = appliedFilters.filter(f => f !== filter);
-    setAppliedFilters(newAppliedFilters);
-  
-    const token = localStorage.getItem("token");
-    const data = await getExpenses(newFilters, token);
-    setExpenses(data);
+      return updated;
+    });
   };
- 
+   
   return (
     <div className="container mt-5">
       <div className="row">
@@ -145,46 +148,72 @@ const Dashboard = () => {
                 class="form-control"
               />
             </div>
-
-            <div class="d-flex flex-column align-items-center">
-              <label for="category">Category</label>
-              <select
-                id="category"
-                name="category"
-                value={filters.category}
-                onChange={(e) => setFilters({ ...filters, category: e.target.value })}
-                class="form-control"
-              >
-                <option value="All">All</option>
-                {categories.map((cat) => (
-                  <option key={cat} value={cat}>{cat}</option>
-                ))}
-              </select>
+          
+            <div className="d-flex flex-column align-items-center position-relative">
+              <label htmlFor="category">Categories</label>
+              <div className="form-control" style={{ cursor: "pointer" }} onClick={() => setShowDropdown(!showDropdown)}>
+                {filters.category.length > 0 ? filters.category.join(", ") : "Select Categories"}
+              </div>
+              {showDropdown && (
+                <div className="dropdown-menu show p-2" style={{ maxHeight: "200px", overflowY: "auto" }}>
+                  {categories.map((cat) => (
+                    <div className="form-check" key={cat}>
+                      <input
+                        className="form-check-input"
+                        type="checkbox"
+                        value={cat}
+                        id={`cat-${cat}`}
+                        checked={filters.category.includes(cat)}
+                        onChange={(e) => {
+                          const checked = e.target.checked;
+                          const newCategories = checked
+                            ? [...filters.category, cat]
+                            : filters.category.filter(c => c !== cat);
+                          setFilters({ ...filters, category: newCategories });
+                        }}
+                      />
+                      <label className="form-check-label" htmlFor={`cat-${cat}`}>
+                        {cat}
+                      </label>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
 
             <button onClick={clearFilters} className="btn primary-btn m-3">Clear Filters</button>
           </div>
 
-            {appliedFilters.length > 0 && (
-              <div className="mt-3">
-                <h5>Applied Filters:</h5>
-                <div className="d-flex flex-wrap">
-                  {appliedFilters.map((filter, index) => (
-                    <span key={index} className="badge me-2 bg-secondary text-white d-flex align-items-center">
-                      {filter}
-                      <span
-                        className="ms-2"
-                        style={{ cursor: "pointer", fontWeight: "bold" }}
-                        onClick={() => removeFilter(filter)}
-                      >
-                        ×
-                      </span>
-                    </span>
-                  ))}
-                </div>
+          {appliedFilters.length > 0 && (
+            <div className="mt-3">
+              <h5>Applied Filters:</h5>
+              <div className="d-flex flex-wrap">
+                {appliedFilters.map((filter, index) => (
+                  <span
+                  key={index}
+                  className="badge d-inline-flex align-items-center me-2 py-2 px-3"
+                >
+                  <span className="text-white">
+                    {filter.type === 'category'
+                      ? `Category: ${filter.value}`
+                      : filter.type === 'startDate'
+                      ? `Start: ${filter.value}`
+                      : `End: ${filter.value}`}
+                  </span>
+                  <button
+                    type="button"
+                    className="btn-close btn-close-white ms-2"
+                    aria-label="Close"
+                    style={{ transform: 'scale(0.7)' }}
+                    onClick={() => handleRemoveFilter(filter)}
+                  />
+                </span>
+                
+                ))}
               </div>
-            )}
-            
+            </div>
+          )}
+ 
             {view === "table" ? (
               <ExpenseList expenses={expenses} setExpenses={setExpenses} />
             ) : (
