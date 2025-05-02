@@ -39,7 +39,7 @@ const ExpenseList = ({ expenses, setExpenses }) => {
 
   return (
     <div className="container mt-4">
-      <h2 className="text-center mb-3">Expense List</h2>
+      {/* <h2 className="text-center mb-3">Expense List</h2> */}
 
       {expenses.length === 0 ? (
         <p className="text-muted text-center">No expenses added yet.</p>

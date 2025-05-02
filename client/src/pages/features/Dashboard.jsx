@@ -8,7 +8,6 @@ import { getExpenses, getCategories } from "../../services/ExpenseService";
 
 const Dashboard = () => {
   const [expenses, setExpenses] = useState([]);
-  const [view, setView] = useState("table");
   const [filters, setFilters] = useState({
     startDate: "",
     endDate: "",
@@ -17,6 +16,7 @@ const Dashboard = () => {
   const [categories, setCategories] = useState([]);
   const [appliedFilters, setAppliedFilters] = useState([]);
   const [showDropdown, setShowDropdown] = useState(false);
+  const [chartType, setChartType] = useState("category"); // 'category' or 'item'
 
   const fetchExpenses = async () => {
     try {
@@ -102,26 +102,27 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="container mt-5">
-      <div className="row">
-        {/* Left Panel */}
-        <div className="col-md-4">
+    <div className="container mt-4">
+      {/* Row 1: ExpenseForm and BudgetForm side by side */}
+      <div className="row mb-4">
+        <div className="col-md-6">
           <div className="card p-3">
-            <h4 className="text-center">Add Expense</h4>
+            <h5 className="text-center">Add Expense</h5>
             <ExpenseForm fetchExpenses={fetchExpenses} fetchCategories={fetchCategories} />
           </div>
-          <BudgetForm categories={categories} />
         </div>
-
-        {/* Right Panel */}
-        <div className="col-md-8">
-          <div className="d-flex justify-content-center mb-3">
-            <button className="btn primary-btn" onClick={() => setView(view === "table" ? "chart" : "table")}>
-              Switch to {view === "table" ? "Chart" : "Table"} View
-            </button>
+        <div className="col-md-6">
+          <div className="card p-3">
+            <h5 className="text-center">Set Budget</h5>
+            <BudgetForm categories={categories} />
           </div>
+        </div>
+      </div>
 
-          <div className="border rounded p-3 card">
+      {/* Row 2: Filters + List and Chart Side by Side */}
+      <div className="row mb-3">
+        <div className="col">
+          <div className="card p-3">
             <ExpenseFilter
               filters={filters}
               setFilters={setFilters}
@@ -132,12 +133,22 @@ const Dashboard = () => {
               appliedFilters={appliedFilters}
               handleRemoveFilter={handleRemoveFilter}
             />
+          </div>
+        </div>
+      </div>
 
-            {view === "table" ? (
-              <ExpenseList expenses={expenses} setExpenses={setExpenses} />
-            ) : (
-              <ExpenseChart expenses={expenses} />
-            )}
+      <div className="row mb-3">
+        <div className="col">
+          <div className="card p-3">
+          <h3 className="text-center mb-3">Expenses</h3>
+            <div className="row">
+              <div className="col-md-6 border-end">
+                <ExpenseList expenses={expenses} setExpenses={setExpenses} />
+              </div>
+              <div className="col-md-6">
+                <ExpenseChart expenses={expenses} chartType={chartType} />
+              </div>
+            </div>
           </div>
         </div>
       </div>
