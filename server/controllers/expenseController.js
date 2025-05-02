@@ -19,10 +19,18 @@ export const getExpenses = async (req, res) => {
       user: req.user.id,
     };
 
-    // Optional: Add date filter if provided
-    if (startDate && endDate) {
+    // Optional: Add startDate filter if provided
+    if (startDate) {
       filter.date = {
+        ...filter.date, // preserve existing date filters (if any)
         $gte: new Date(startDate),
+      };
+    }
+
+    // Optional: Add endDate filter if provided
+    if (endDate) {
+      filter.date = {
+        ...filter.date, // preserve existing date filters (if any)
         $lte: new Date(endDate),
       };
     }
@@ -31,7 +39,7 @@ export const getExpenses = async (req, res) => {
     if (category && category !== "All") {
       filter.category = category;
     }
- 
+
     const expenses = await Expense.find(filter).sort({ date: -1 });
 
     res.status(200).json(expenses);
