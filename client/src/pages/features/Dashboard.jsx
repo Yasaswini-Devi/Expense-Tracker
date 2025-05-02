@@ -161,11 +161,9 @@ const Dashboard = () => {
                 ))}
               </select>
             </div>
-          </div>
 
-            <div className="mt-3 d-flex justify-content-evenly">
-              <button onClick={clearFilters} className="btn secondary-btn">Clear Filters</button>
-            </div>
+            <button onClick={clearFilters} className="btn primary-btn m-3">Clear Filters</button>
+          </div>
 
             {appliedFilters.length > 0 && (
               <div className="mt-3">
