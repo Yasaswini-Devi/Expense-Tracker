@@ -19,7 +19,7 @@ body {
   /* Primary Color: Burgundy */
   :root {
     --primary-color: #2F4F4F;    /* Deep Burgundy */
-    --primary-light: #A23E48;    /* Soft Burgundy for buttons */
+    --primary-light: #547474;    /* Soft Burgundy for buttons */
     --secondary-color: #C9A86A;  /* Muted Gold */
     --text-color: #333333;       /* Standard text */
     --subtle-text: #5C5C5C;      /* Secondary text */
@@ -65,7 +65,7 @@ body {
   }
   
   .primary-btn:hover {
-    background-color: #8B2E3B; /* Slightly darker burgundy */
+    background-color: #194444; /* Slightly darker burgundy */
     color: white;
     box-shadow: 0 4px 12px var(--shadow-color);
   }
