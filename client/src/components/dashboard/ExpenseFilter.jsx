@@ -50,7 +50,18 @@ const ExpenseFilter = ({
             {filters.category.length > 0 ? filters.category.join(", ") : "Select Categories"}
           </div>
           {showDropdown && (
-            <div className="dropdown-menu show p-2" style={{ maxHeight: "200px", overflowY: "auto" }}>
+            <div
+              className="dropdown-menu show p-2"
+              style={{
+                maxHeight: "200px",
+                overflowY: "auto",
+                position: "absolute",  // Ensures it's positioned relative to the container
+                top: "100%",  // Position dropdown right below the input field
+                left: 0,
+                right: 0,
+                zIndex: 1000, // Ensures it appears above other elements
+              }}
+            >
               {categories.map((cat) => (
                 <div className="form-check" key={cat}>
                   <input
