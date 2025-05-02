@@ -70,6 +70,10 @@ const Dashboard = () => {
     fetchCategories();
   }, []);
 
+  useEffect(() => {
+    applyFilters();
+  }, [filters]);
+ 
   const removeFilter = async (filter) => {
     const newFilters = { ...filters };
   
@@ -160,7 +164,6 @@ const Dashboard = () => {
           </div>
 
             <div className="mt-3 d-flex justify-content-evenly">
-              <button onClick={applyFilters} className="btn primary-btn">Apply</button>
               <button onClick={clearFilters} className="btn secondary-btn">Clear Filters</button>
             </div>
 
