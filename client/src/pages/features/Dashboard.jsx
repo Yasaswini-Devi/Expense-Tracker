@@ -70,6 +70,28 @@ const Dashboard = () => {
     fetchCategories();
   }, []);
 
+  const removeFilter = async (filter) => {
+    const newFilters = { ...filters };
+  
+    if (filter.startsWith("Start Date:")) {
+      newFilters.startDate = '';
+    } else if (filter.startsWith("End Date:")) {
+      newFilters.endDate = '';
+    } else if (filter.startsWith("Category:")) {
+      newFilters.category = 'All';
+    }
+  
+    setFilters(newFilters);
+  
+    // Re-apply filters after removal
+    const newAppliedFilters = appliedFilters.filter(f => f !== filter);
+    setAppliedFilters(newAppliedFilters);
+  
+    const token = localStorage.getItem("token");
+    const data = await getExpenses(newFilters, token);
+    setExpenses(data);
+  };
+ 
   return (
     <div className="container mt-5">
       <div className="row">
@@ -147,8 +169,15 @@ const Dashboard = () => {
                 <h5>Applied Filters:</h5>
                 <div className="d-flex flex-wrap">
                   {appliedFilters.map((filter, index) => (
-                    <span key={index} className="badge me-2">
+                    <span key={index} className="badge me-2 bg-secondary text-white d-flex align-items-center">
                       {filter}
+                      <span
+                        className="ms-2"
+                        style={{ cursor: "pointer", fontWeight: "bold" }}
+                        onClick={() => removeFilter(filter)}
+                      >
+                        ×
+                      </span>
                     </span>
                   ))}
                 </div>
