@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import ExpenseForm from "../../components/dashboard/ExpenseForm";
 import ExpenseChart from "../../components/dashboard/ExpenseChart";
 import ExpenseList from "../../components/dashboard/ExpenseList";
@@ -70,6 +71,15 @@ const Dashboard = () => {
 
     setAppliedFilters(newFilters);
   };
+
+  const navigate = useNavigate();
+  
+    useEffect(() => {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        navigate("/login");
+      }
+    }, [navigate]);
 
   useEffect(() => {
     fetchExpenses();

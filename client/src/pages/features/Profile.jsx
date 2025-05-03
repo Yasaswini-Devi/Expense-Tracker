@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { getUserDetails, updateUserDetails, uploadProfilePicture } from "../../services/UserService";
 import ResetPassword from "../../components/profile/ResetPassword";
 
@@ -10,6 +11,15 @@ const Profile = () => {
   const [profilePic, setProfilePic] = useState(null);
   const [showReset, setShowReset] = useState(false);
   const token = localStorage.getItem("token");
+
+  const navigate = useNavigate();
+  
+    useEffect(() => {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        navigate("/login");
+      }
+    }, [navigate]);
 
   useEffect(() => {
     const fetchUserDetails = async () => {

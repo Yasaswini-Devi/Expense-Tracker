@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { createExpense } from "../../services/ExpenseService";
 import { getBudget } from "../../services/BudgetService";
 import { getMonthlyTotals } from "../../services/ExpenseService";
@@ -7,53 +7,64 @@ const ExpenseForm = ({ fetchExpenses, fetchCategories }) => {
   const [title, setTitle] = useState("");
   const [amount, setAmount] = useState("");
   const [category, setCategory] = useState("");
+  const [customCategory, setCustomCategory] = useState("");
   const [date, setDate] = useState("");
+  const [categories, setCategories] = useState([]);
+
+  useEffect(() => {
+    const loadCategories = async () => {
+      const token = localStorage.getItem("token");
+      const result = await fetchCategories(token);
+      setCategories(result || []);
+    };
+    loadCategories();
+  }, [fetchCategories]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const token = localStorage.getItem("token");
+
+    const finalCategory = category === "Other" ? customCategory : category;
+
     try {
-      const token = localStorage.getItem("token");
-
-      // Extract month/year
-      const dateObj = new Date(date);
-      const month = dateObj.getMonth() + 1;
-      const year = dateObj.getFullYear();
-
-      // Fetch budget and monthly totals
-      const [budgetData, totals] = await Promise.all([
-        getBudget(month, year, token),
-        getMonthlyTotals(month, year, token),
-      ]);
-
-      const categoryBudget = budgetData.budgets[category];
-      const currentTotal = totals[category] || 0;
-      const newTotal = currentTotal + Number(amount);
-
-      if (categoryBudget) {
-        if (newTotal > categoryBudget) {
-          alert(`⚠️ This expense exceeds your budget for "${category}"!`);
-        } else if (newTotal > 0.9 * categoryBudget) {
-          alert(`⚠️ You're close to exceeding your budget for "${category}".`);
-        }
-      }
-
-      // Add the expense anyway
       await createExpense(
         {
           title,
           amount,
-          category,
+          category: finalCategory,
           date,
         },
         token
       );
 
-      fetchExpenses();
-      fetchCategories();
+      // Fetch budget and updated totals
+      const dateObj = new Date(date);
+      const month = dateObj.getMonth() + 1;
+      const year = dateObj.getFullYear();
 
+      const [budgetData, totals] = await Promise.all([
+        getBudget(month, year, token),
+        getMonthlyTotals(month, year, token),
+      ]);
+
+      const categoryBudget = budgetData.budgets[finalCategory];
+      const updatedTotal = totals[finalCategory] || 0;
+
+      if (categoryBudget) {
+        const remaining = categoryBudget - updatedTotal;
+
+        if (remaining >= 0) {
+          alert(`✅ You have ₹${remaining} left in your "${finalCategory}" budget.`);
+        } else {
+          alert(`⚠️ You are ₹${-remaining} over budget for "${finalCategory}".`);
+        }
+      }
+
+      fetchExpenses();
       setTitle("");
       setAmount("");
       setCategory("");
+      setCustomCategory("");
       setDate("");
     } catch (error) {
       console.error("Error adding expense:", error);
@@ -88,15 +99,35 @@ const ExpenseForm = ({ fetchExpenses, fetchCategories }) => {
 
       <div className="mb-3">
         <label className="form-label">Category</label>
-        <input
-          type="text"
-          className="form-control"
-          placeholder="Enter category"
+        <select
+          className="form-select"
           value={category}
           onChange={(e) => setCategory(e.target.value)}
           required
-        />
+        >
+          <option value="">Select a category</option>
+          {categories.map((cat) => (
+            <option key={cat} value={cat}>
+              {cat}
+            </option>
+          ))}
+          <option value="Other">Other</option>
+        </select>
       </div>
+
+      {category === "Other" && (
+        <div className="mb-3">
+          <label className="form-label">Custom Category</label>
+          <input
+            type="text"
+            className="form-control"
+            placeholder="Enter custom category"
+            value={customCategory}
+            onChange={(e) => setCustomCategory(e.target.value)}
+            required
+          />
+        </div>
+      )}
 
       <div className="mb-3">
         <label className="form-label">Date</label>
