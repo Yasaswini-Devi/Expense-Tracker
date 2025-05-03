@@ -1,29 +1,74 @@
 import React, { useState } from "react";
-import PageSummary from "../../components/summary/PageSummary";
-import MonthlySummary from "../../components/summary/MonthlySummary";
 import YearlySummary from "../../components/summary/YearlySummary";
-import SummaryCharts from "../../components/summary/SummaryCharts";
+import MonthlySummary from "../../components/summary/MonthlySummary";
 
-const SummaryDashboard = () => {
-  const [view, setView] = useState("monthly");
+const Summary = () => {
+  const [selectedTab, setSelectedTab] = useState("yearly"); // Default tab is 'yearly'
+  const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
+  const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth() + 1); // Default is current month
 
   return (
-    <div className="p-4">
-      <h2>📈 Summary Dashboard</h2>
-
-      <div className="btn-group my-3">
-        <button className="btn btn-outline-primary" onClick={() => setView("page")}>Page Summary</button>
-        <button className="btn btn-outline-primary" onClick={() => setView("monthly")}>Monthly Summary</button>
-        <button className="btn btn-outline-primary" onClick={() => setView("yearly")}>Yearly Summary</button>
-        <button className="btn btn-outline-primary" onClick={() => setView("charts")}>Budget Insights</button>
+    <div className="summary-container">
+      <div className="tabs">
+        <button
+          className={selectedTab === "yearly" ? "active" : ""}
+          onClick={() => setSelectedTab("yearly")}
+        >
+          Yearly Summary
+        </button>
+        <button
+          className={selectedTab === "monthly" ? "active" : ""}
+          onClick={() => setSelectedTab("monthly")}
+        >
+          Monthly Summary
+        </button>
       </div>
 
-      {view === "page" && <PageSummary />}
-      {view === "monthly" && <MonthlySummary />}
-      {view === "yearly" && <YearlySummary />}
-      {view === "charts" && <SummaryCharts />}
+      {selectedTab === "yearly" && (
+        <div className="yearly-summary">
+          <div className="year-selector">
+            <label>Select Year: </label>
+            <select
+              value={selectedYear}
+              onChange={(e) => setSelectedYear(e.target.value)}
+            >
+              {/* Year options for the past 5 years */}
+              {[...Array(5)].map((_, index) => {
+                const year = new Date().getFullYear() - index;
+                return (
+                  <option key={year} value={year}>
+                    {year}
+                  </option>
+                );
+              })}
+            </select>
+          </div>
+
+          <YearlySummary selectedYear={selectedYear}/>
+        </div>
+      )}
+
+      {selectedTab === "monthly" && (
+        <div className="monthly-summary">
+          <div className="month-selector">
+            <label>Select Month: </label>
+            <select
+              value={selectedMonth}
+              onChange={(e) => setSelectedMonth(e.target.value)}
+            >
+              {[...Array(12)].map((_, index) => (
+                <option key={index} value={index + 1}>
+                  {new Date(0, index).toLocaleString("en", { month: "long" })}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <MonthlySummary month={selectedMonth} year={selectedYear} />
+        </div>
+      )}
     </div>
   );
 };
 
-export default SummaryDashboard;
+export default Summary;

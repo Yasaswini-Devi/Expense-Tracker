@@ -1,45 +1,56 @@
 import React, { useState, useEffect } from "react";
 import { getYearlySummary } from "../../services/SummaryService";
+import { Pie } from "react-chartjs-2";
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 
-const YearlySummary = () => {
-  const today = new Date();
-  const [year, setYear] = useState(today.getFullYear());
-  const [summary, setSummary] = useState(null);
+ChartJS.register(ArcElement, Tooltip, Legend);
 
+const YearlySummary = ({ selectedYear }) => {
+  const [totalSpent, setTotalSpent] = useState(0);
+  const [monthlyExpenditure, setMonthlyExpenditure] = useState([]);
+  const token = localStorage.getItem("token");
+  
   useEffect(() => {
-    fetchSummary();
-  }, [year]);
+    const fetchYearlySummary = async () => {
+      try {
+        const data = await getYearlySummary(selectedYear, token);
+        setTotalSpent(data.totalSpent);
+        setMonthlyExpenditure(data.monthlyExpenditure);
+      } catch (error) {
+        console.error("Error fetching yearly summary:", error);
+      }
+    };
+    fetchYearlySummary();
+  }, [selectedYear, token]);
 
-  const fetchSummary = async () => {
-    const token = localStorage.getItem("token");
-    try {
-      const data = await getYearlySummary(year, token);
-      setSummary(data);
-    } catch (error) {
-      console.error("Failed to fetch yearly summary:", error);
-    }
+  const chartData = {
+    labels: [
+      "January", "February", "March", "April", "May", "June",
+      "July", "August", "September", "October", "November", "December"
+    ],
+    datasets: [
+      {
+        label: "Monthly Expenditure",
+        data: monthlyExpenditure,
+        backgroundColor: [
+          "#FF6F61", "#6A5ACD", "#8B0000", "#00BFFF", "#98FB98", "#FFD700", 
+          "#D2691E", "#8A2BE2", "#D3D3D3", "#F0E68C", "#A9A9A9", "#D3D3D3"
+        ],
+        borderColor: [
+          "#FF6F61", "#6A5ACD", "#8B0000", "#00BFFF", "#98FB98", "#FFD700", 
+          "#D2691E", "#8A2BE2", "#D3D3D3", "#F0E68C", "#A9A9A9", "#D3D3D3"
+        ],
+        borderWidth: 1,
+      },
+    ],
   };
 
-  const yearRange = Array.from({ length: 5 }, (_, i) => today.getFullYear() - 2 + i);
-
   return (
-    <div className="p-3">
-      <h3>📅 Yearly Summary</h3>
-
-      <select value={year} onChange={(e) => setYear(Number(e.target.value))} className="form-select w-auto mb-3">
-        {yearRange.map((y) => (
-          <option key={y} value={y}>{y}</option>
-        ))}
-      </select>
-
-      {summary ? (
-        <div className="card p-3">
-          <p><strong>Total Spent:</strong> ₹{summary.totalSpent}</p>
-          <p><strong>Top Categories:</strong> {summary.topCategories?.join(", ") || "N/A"}</p>
-        </div>
-      ) : (
-        <p>Loading yearly summary...</p>
-      )}
+    <div className="yearly-summary-content">
+      <h2>Total Spent in {selectedYear}: ${totalSpent}</h2>
+      <div style={{ height: "300px" }}>
+        <Pie data={chartData} />
+      </div>
     </div>
   );
 };
