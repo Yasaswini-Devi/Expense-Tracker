@@ -25,6 +25,16 @@ const Profile = () => {
     fetchUserDetails();
   }, [token]);
 
+  useEffect(() => {
+    if (message) {
+      const timer = setTimeout(() => {
+        setMessage("");
+      }, 3000); // hide after 3 seconds
+  
+      return () => clearTimeout(timer); // cleanup on unmount or message change
+    }
+  }, [message])
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
