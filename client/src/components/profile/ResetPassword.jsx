@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Form, Button, Alert } from "react-bootstrap";
 import { resetPassword } from "../../services/UserService";
 
@@ -7,9 +7,19 @@ const ResetPassword = ({ token }) => {
   const [newPassword, setNewPassword] = useState("");
   const [message, setMessage] = useState("");
 
+  useEffect(() => {
+      if (message) {
+        const timer = setTimeout(() => {
+          setMessage("");
+        }, 3000); // hide after 3 seconds
+    
+        return () => clearTimeout(timer); // cleanup on unmount or message change
+      }
+    }, [message])
+
   const handleSubmit = async () => {
     try {
-      await resetPassword({ currentPassword, newPassword }, token);
+      await resetPassword(currentPassword, newPassword, token);
       setMessage("Password reset successfully.");
       setCurrentPassword("");
       setNewPassword("");

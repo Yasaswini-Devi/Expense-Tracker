@@ -1,4 +1,5 @@
 import User from "../models/User.js";
+import bcrypt from "bcryptjs";
 
 // Get user profile
 export const getUserDetails = async (req, res) => {
@@ -28,16 +29,35 @@ export const updateUserDetails = async (req, res) => {
 
 // Reset password
 export const resetPassword = async (req, res) => {
-  const { newPassword } = req.body;
-  try {
-    const user = await User.findById(req.user.id);
-    user.password = newPassword; // Make sure you hash in a pre-save hook
-    await user.save();
-    res.json({ message: "Password reset successfully." });
-  } catch (err) {
-    res.status(500).json({ message: "Failed to reset password", error: err });
-  }
-};
+    try {
+        const { currentPassword, newPassword } = req.body;
+
+        if (!newPassword) {
+          return res.status(400).json({ message: "New password is required" });
+        }
+        
+        const user = await User.findById(req.user.id);
+        
+        // Optional: verify currentPassword matches existing one
+        const isMatch = await bcrypt.compare(currentPassword, user.password);
+        if (!isMatch) {
+          return res.status(401).json({ message: "Current password is incorrect" });
+        }
+        
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(newPassword, salt);
+
+        // Update and save
+        user.password = hashedPassword;
+        await user.save();
+        
+        res.status(200).json({ message: "Password updated successfully" });        
+    } catch (error) {
+      console.error("Error in resetPassword:", error);
+      res.status(500).json({ message: "Server error while resetting password." });
+    }
+  };
+  
 
 export const uploadProfilePicture = async (req, res) => {
     try {

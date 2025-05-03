@@ -12,19 +12,22 @@ export const getUserDetails = async (token) => {
 
 // Update user details
 export const updateUserDetails = async (formData, token) => {
-  const response = await axios.put(`${API_URL}update`, formData, {
+  const response = await axios.put(`${API_URL}/update`, formData, {
     headers: { Authorization: `Bearer ${token}` },
   });
   return response.data;
 };
 
 // Reset user password
-export const resetPassword = async (newPassword, token) => {
-  const response = await axios.put(`${API_URL}/reset-password`, { newPassword }, {
-    headers: { Authorization: `Bearer ${token}` },
-  });
-  return response.data;
-};
+export const resetPassword = async (currentPassword, newPassword, token) => {
+    const response = await axios.put(`${API_URL}/reset-password`, {
+      currentPassword,
+      newPassword
+    }, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    return response.data;
+  };  
 
 export const uploadProfilePicture = async (formData, token) => {
     const res = await axios.post(`${API_URL}/upload-profile-pic`, formData, {
