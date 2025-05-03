@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import { register } from "../../services/AuthService";
 import { useNavigate } from "react-router-dom";
+import 'bootstrap-icons/font/bootstrap-icons.css';
 
 const Signup = () => {
   const [formData, setFormData] = useState({ username: "", email: "", password: "" });
   const [error, setError] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -34,7 +36,26 @@ const Signup = () => {
       <form onSubmit={handleSubmit}>
         <input className="form-control mb-2" type="text" name="username" placeholder="Username" onChange={handleChange} />
         <input className="form-control mb-2" type="email" name="email" placeholder="Email" onChange={handleChange} />
-        <input className="form-control mb-2" type="password" name="password" placeholder="Password" onChange={handleChange} />
+        <div className="input-group mb-2">
+          <input
+            className="form-control"
+            type={showPassword ? "text" : "password"}
+            name="password"
+            placeholder="Password"
+            onChange={handleChange}
+          />
+          <span
+            className="input-group-text"
+            style={{ cursor: 'pointer' }}
+            onClick={() => setShowPassword(!showPassword)}
+          >
+            {showPassword ? (
+              <i className="bi bi-eye-slash"></i>
+            ) : (
+              <i className="bi bi-eye"></i>
+            )}
+          </span>
+        </div>
         <div className="d-flex justify-content-center">
           <button
             className="btn primary-btn btn-lg shadow-sm mt-3"
