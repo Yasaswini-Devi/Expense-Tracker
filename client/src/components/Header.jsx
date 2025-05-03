@@ -1,17 +1,31 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom"; // ✅ import useNavigate
 import "bootstrap/dist/css/bootstrap.min.css";
 
 const Header = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    setIsLoggedIn(!!token);
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    setIsLoggedIn(false);
+    navigate("/login"); // ✅ Redirect to login after logout
+  };
+
   return (
     <nav className="header navbar navbar-expand-lg shadow-sm">
       <div className="container">
-        {/* Logo Section */}
+        {/* Logo */}
         <Link className="navbar-brand nav-link" to="/dashboard">
           <strong>Expense Tracker</strong>
         </Link>
 
-        {/* Toggle Button for Mobile */}
+        {/* Mobile Toggle */}
         <button
           className="navbar-toggler"
           type="button"
@@ -43,14 +57,20 @@ const Header = () => {
               </Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to="/login">
-                Login
-              </Link>
-            </li>
-            <li className="nav-item">
               <Link className="nav-link" to="/profile">
                 Profile
               </Link>
+            </li>
+            <li className="nav-item">
+              {isLoggedIn ? (
+                <span className="nav-link" role="button" onClick={handleLogout}>
+                  Logout
+                </span>
+              ) : (
+                <Link className="nav-link" to="/login">
+                  Login
+                </Link>
+              )}
             </li>
           </ul>
         </div>
