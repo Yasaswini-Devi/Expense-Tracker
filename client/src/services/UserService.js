@@ -25,3 +25,11 @@ export const resetPassword = async (newPassword, token) => {
   });
   return response.data;
 };
+
+export const uploadProfilePicture = async (formData, token) => {
+    const res = await axios.post(`${API_URL}/upload-profile-pic`, formData, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    return res.data;
+};
+  

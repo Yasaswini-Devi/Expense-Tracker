@@ -7,6 +7,7 @@ import budgetRoutes from "./routes/budgetRoutes.js";
 import summaryRoutes from "./routes/summaryRoutes.js";
 import userRoutes from "./routes/userRoutes.js"
 import cors from "cors";
+import path from "path";
 
 dotenv.config();
 
@@ -20,6 +21,7 @@ app.use("/api/expenses", expenseRoutes);
 app.use("/api/budget", budgetRoutes);
 app.use("/api/summary", summaryRoutes);
 app.use("/api/user", userRoutes);
+app.use("/uploads", express.static(path.join(path.resolve(), "uploads")));
 
 // Connect to MongoDB and start server
 mongoose.connect(process.env.MONGO_URI)

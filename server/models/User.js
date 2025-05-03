@@ -17,6 +17,10 @@ const UserSchema = new mongoose.Schema({
     required: true,
     minlength: 6,  // Minimum password length
   },
+  profilePic: {
+    type: String, // this will store the image path
+    default: "",  // optional
+  },
 }, { timestamps: true });  // createdAt, updatedAt fields
 
 const User = mongoose.model("User", UserSchema);

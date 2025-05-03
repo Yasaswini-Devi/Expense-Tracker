@@ -38,3 +38,21 @@ export const resetPassword = async (req, res) => {
     res.status(500).json({ message: "Failed to reset password", error: err });
   }
 };
+
+export const uploadProfilePicture = async (req, res) => {
+    try {
+      const userId = req.user.id;
+      const profilePicPath = `/uploads/${req.file.filename}`;
+  
+      const user = await User.findByIdAndUpdate(
+        userId,
+        { profilePic: profilePicPath },
+        { new: true }
+      );
+  
+      res.status(200).json({ message: "Profile picture updated", profilePic: user.profilePic });
+    } catch (error) {
+      res.status(500).json({ message: "Failed to upload profile picture", error: error.message });
+    }
+};
+    
