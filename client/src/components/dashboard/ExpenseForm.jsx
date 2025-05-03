@@ -1,24 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { createExpense } from "../../services/ExpenseService";
 import { getBudget } from "../../services/BudgetService";
-import { getMonthlyTotals } from "../../services/ExpenseService";
+import { getMonthlySummary } from "../../services/SummaryService";
 
-const ExpenseForm = ({ fetchExpenses, fetchCategories }) => {
+const ExpenseForm = ({ fetchExpenses, categories }) => {
   const [title, setTitle] = useState("");
   const [amount, setAmount] = useState("");
   const [category, setCategory] = useState("");
   const [customCategory, setCustomCategory] = useState("");
   const [date, setDate] = useState("");
-  const [categories, setCategories] = useState([]);
-
-  useEffect(() => {
-    const loadCategories = async () => {
-      const token = localStorage.getItem("token");
-      const result = await fetchCategories(token);
-      setCategories(result || []);
-    };
-    loadCategories();
-  }, [fetchCategories]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -44,7 +34,7 @@ const ExpenseForm = ({ fetchExpenses, fetchCategories }) => {
 
       const [budgetData, totals] = await Promise.all([
         getBudget(month, year, token),
-        getMonthlyTotals(month, year, token),
+        getMonthlySummary(month, year, token),
       ]);
 
       const categoryBudget = budgetData.budgets[finalCategory];

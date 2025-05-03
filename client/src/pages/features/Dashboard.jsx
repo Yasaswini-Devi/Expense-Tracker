@@ -118,7 +118,7 @@ const Dashboard = () => {
         <div className="col-md-6 d-flex">
           <div className="card p-3 w-100 h-100">
             <h5 className="text-center">Add Expense</h5>
-            <ExpenseForm fetchExpenses={fetchExpenses} fetchCategories={fetchCategories} />
+            <ExpenseForm fetchExpenses={fetchExpenses} categories={categories} />
           </div>
         </div>
         <div className="col-md-6 d-flex">
