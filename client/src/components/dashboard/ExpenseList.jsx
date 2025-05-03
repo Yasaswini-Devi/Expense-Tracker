@@ -52,6 +52,7 @@ const ExpenseList = ({ expenses, setExpenses }) => {
                 <th>Title</th>
                 <th>Amount (₹)</th>
                 <th>Category</th>
+                <th>Date</th>
               </tr>
             </thead>
             <tbody>
@@ -67,6 +68,7 @@ const ExpenseList = ({ expenses, setExpenses }) => {
                   <td>{expense.title}</td>
                   <td>₹{expense.amount}</td>
                   <td>{expense.category}</td>
+                  <td>{new Date(expense.date).toLocaleDateString("en-IN")}</td>
                 </tr>
               ))}
             </tbody>
