@@ -23,7 +23,7 @@ const Profile = () => {
       }
     };
     fetchUserDetails();
-  }, [token]);
+  }, [token, message === "Details updated successfully."]);
 
   useEffect(() => {
     if (message) {

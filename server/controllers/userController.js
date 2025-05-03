@@ -17,7 +17,7 @@ export const updateUserDetails = async (req, res) => {
   try {
     const updatedUser = await User.findByIdAndUpdate(
       req.user.id,
-      { name, email },
+      { username: name, email },
       { new: true }
     ).select("-password");
 
