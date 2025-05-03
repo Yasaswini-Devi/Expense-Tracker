@@ -46,11 +46,11 @@ const ExpenseList = ({ expenses, setExpenses }) => {
       ) : (
         <>
           <table className="table table-striped table-bordered">
-            <thead className="table-dark">
+            <thead className="primary-bg">
               <tr>
                 <th>Select</th>
                 <th>Title</th>
-                <th>Amount ($)</th>
+                <th>Amount (₹)</th>
                 <th>Category</th>
               </tr>
             </thead>
@@ -65,7 +65,7 @@ const ExpenseList = ({ expenses, setExpenses }) => {
                     />
                   </td>
                   <td>{expense.title}</td>
-                  <td>${expense.amount}</td>
+                  <td>₹{expense.amount}</td>
                   <td>{expense.category}</td>
                 </tr>
               ))}

@@ -29,9 +29,9 @@ const MonthlySummary = ({ month, year }) => {
   return (
     <div className="monthly-summary-content">
       <div className="d-flex justify-content-evenly">
-        <h5>Total Spent: ${totalSpent}</h5>
+        <h5>Total Spent: ₹{totalSpent}</h5>
         <h5>{monthNames[month - 1]}</h5>
-        <h5>Total Budget: ${totalBudget}</h5>
+        <h5>Total Budget: ₹{totalBudget}</h5>
       </div>
 
       {/* Category-wise progress bars */}
@@ -53,9 +53,9 @@ const MonthlySummary = ({ month, year }) => {
             <div key={category} className="category-progress">
               <h5>{category}</h5>
               <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '5px' }}>
-                <span>Spent: ${spent}</span>
-                <span>Budget: ${budget}</span>
-                <span>Remaining: ${remainingBudget}</span>
+                <span>Spent: ₹{spent}</span>
+                <span>Budget: ₹{budget}</span>
+                <span>Remaining: ₹{remainingBudget}</span>
               </div>
               <ProgressBar
                 now={percentage}

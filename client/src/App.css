@@ -161,3 +161,8 @@ body {
     background-color: var(--primary-light);
     color: white;
   }
+
+  .primary-bg {
+    background-color: var(--primary-light);
+    color: white;
+  }

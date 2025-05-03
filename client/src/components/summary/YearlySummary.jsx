@@ -56,7 +56,7 @@ const YearlySummary = ({ selectedYear }) => {
 
   return (
     <div className="position-relative">
-      <h5 className="mb-3">Total Spent in {selectedYear}: ${totalSpent}</h5>
+      <h5 className="mb-3">Total Spent in {selectedYear}: ₹{totalSpent}</h5>
 
       <div className="d-flex">
         <div style={{ width: "60%" }}>
