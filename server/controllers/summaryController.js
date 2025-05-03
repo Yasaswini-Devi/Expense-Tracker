@@ -66,15 +66,18 @@ export const getMonthlySummary = async (req, res) => {
     ]);
 
     const budgetDoc = await Budget.findOne({ userId, month: +month, year: +year });
+    const budgets = budgetDoc?.budgets || {}; 
 
-    const budgets = budgetDoc?.budgets || {};
+    // Convert Map to Object if it's a Map
+    const budgetsObject = budgets instanceof Map ? Object.fromEntries(budgets) : budgets;
+    
     const result = {};
 
     let totalBudget = 0;
     let totalSpent = 0;
 
-    for (const category in budgets) {
-      const budget = budgets[category];
+    for (const category in budgetsObject) {
+      const budget = budgetsObject[category];
       totalBudget += budget;
 
       const spent = expenses.find(e => e._id === category)?.totalSpent || 0;
