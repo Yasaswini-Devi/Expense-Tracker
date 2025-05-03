@@ -157,3 +157,7 @@ body {
     background-color: var(--component-bg);
   }
   
+  .card-header {
+    background-color: var(--primary-light);
+    color: white;
+  }

@@ -3,70 +3,64 @@ import YearlySummary from "../../components/summary/YearlySummary";
 import MonthlySummary from "../../components/summary/MonthlySummary";
 
 const Summary = () => {
-  const [selectedTab, setSelectedTab] = useState("yearly"); // Default tab is 'yearly'
   const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
-  const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth() + 1); // Default is current month
+  const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth() + 1);
 
   return (
-    <div className="summary-container">
-      <div className="tabs">
-        <button
-          className={selectedTab === "yearly" ? "active" : ""}
-          onClick={() => setSelectedTab("yearly")}
-        >
-          Yearly Summary
-        </button>
-        <button
-          className={selectedTab === "monthly" ? "active" : ""}
-          onClick={() => setSelectedTab("monthly")}
-        >
-          Monthly Summary
-        </button>
-      </div>
+    <div className="container mt-4">
+      <div className="card shadow-sm">
+        <div className="card-header">
+          <div className="row align-items-center">
+            <div className="col-md-6">
+              <label htmlFor="yearSelect" className="form-label mb-1">Select Year</label>
+              <select
+                id="yearSelect"
+                className="form-select"
+                value={selectedYear}
+                onChange={(e) => setSelectedYear(Number(e.target.value))}
+              >
+                {[...Array(5)].map((_, index) => {
+                  const year = new Date().getFullYear() - index;
+                  return (
+                    <option key={year} value={year}>
+                      {year}
+                    </option>
+                  );
+                })}
+              </select>
+            </div>
 
-      {selectedTab === "yearly" && (
-        <div className="yearly-summary">
-          <div className="year-selector">
-            <label>Select Year: </label>
-            <select
-              value={selectedYear}
-              onChange={(e) => setSelectedYear(e.target.value)}
-            >
-              {/* Year options for the past 5 years */}
-              {[...Array(5)].map((_, index) => {
-                const year = new Date().getFullYear() - index;
-                return (
-                  <option key={year} value={year}>
-                    {year}
+            <div className="col-md-6">
+              <label htmlFor="monthSelect" className="form-label mb-1">Select Month</label>
+              <select
+                id="monthSelect"
+                className="form-select"
+                value={selectedMonth}
+                onChange={(e) => setSelectedMonth(Number(e.target.value))}
+              >
+                {[...Array(12)].map((_, index) => (
+                  <option key={index} value={index + 1}>
+                    {new Date(0, index).toLocaleString("en", { month: "long" })}
                   </option>
-                );
-              })}
-            </select>
+                ))}
+              </select>
+            </div>
           </div>
-
-          <YearlySummary selectedYear={selectedYear}/>
         </div>
-      )}
 
-      {selectedTab === "monthly" && (
-        <div className="monthly-summary">
-          <div className="month-selector">
-            <label>Select Month: </label>
-            <select
-              value={selectedMonth}
-              onChange={(e) => setSelectedMonth(e.target.value)}
-            >
-              {[...Array(12)].map((_, index) => (
-                <option key={index} value={index + 1}>
-                  {new Date(0, index).toLocaleString("en", { month: "long" })}
-                </option>
-              ))}
-            </select>
+        <div className="card-body">
+
+          {/* Summaries in a row */}
+          <div className="row">
+            <div className="col-md-6 mb-3">
+              <YearlySummary selectedYear={selectedYear} />
+            </div>
+            <div className="col-md-6 mb-3">
+              <MonthlySummary month={selectedMonth} year={selectedYear} />
+            </div>
           </div>
-
-          <MonthlySummary month={selectedMonth} year={selectedYear} />
         </div>
-      )}
+      </div>
     </div>
   );
 };
