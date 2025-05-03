@@ -8,6 +8,7 @@ import Dashboard from "./pages/features/Dashboard";
 import Header from "./components/Header";
 import "./App.css";
 import MonthlySummary from "./pages/features/Summary";
+import Profile from "./pages/features/Profile";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           <Route path="/signup" element={<Signup />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/summary" element={<MonthlySummary />} />
+          <Route path="/profile" element={<Profile />} />
         </Routes>
     </Router>
   );

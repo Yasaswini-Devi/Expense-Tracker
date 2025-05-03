@@ -5,6 +5,7 @@ import authRoutes from "./routes/authRoutes.js";
 import expenseRoutes from "./routes/expenseRoutes.js";
 import budgetRoutes from "./routes/budgetRoutes.js";
 import summaryRoutes from "./routes/summaryRoutes.js";
+import userRoutes from "./routes/userRoutes.js"
 import cors from "cors";
 
 dotenv.config();
@@ -18,6 +19,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/expenses", expenseRoutes);
 app.use("/api/budget", budgetRoutes);
 app.use("/api/summary", summaryRoutes);
+app.use("/api/user", userRoutes);
 
 // Connect to MongoDB and start server
 mongoose.connect(process.env.MONGO_URI)
