@@ -18,8 +18,9 @@ const BudgetForm = ({ categories }) => {
         // Check if a budget exists
         if (data.budgets && Object.keys(data.budgets).length > 0) {
           setBudgets(data.budgets);  // Pre-fill the form with previous values
-        } else {
-          setError(data.message);  // In case no budget is set yet
+        } 
+        else {
+          setBudgets({});
         }
       } catch (err) {
         setError("Error fetching budget");
