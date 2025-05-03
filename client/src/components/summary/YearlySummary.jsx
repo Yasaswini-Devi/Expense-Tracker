@@ -6,8 +6,18 @@ import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 const colors = [
-  "#FF6F61", "#6A5ACD", "#8B0000", "#00BFFF", "#98FB98", "#FFD700", 
-  "#D2691E", "#8A2BE2", "#D3D3D3", "#F0E68C", "#A9A9A9", "#D3D3D3"
+  "#6A8E91", // Muted teal-gray (complements primary-dark)
+  "#C49C68", // Soft ochre (refined gold complement)
+  "#BFA5A0", // Vintage rose (warms up the palette)
+  "#D5C5B0", // Parchment beige (elegant contrast)
+  "#9F7E69", // Burnt peach (depth & warmth)
+  "#8A9A8E", // Mossy gray-green (ties to your component bg)
+  "#715C49", // Antique bronze (earthy anchor)
+  "#BDC3C7", // Soft silver-gray (eases tone)
+  "#A88F73", // Dusty copper (warm metallic accent)
+  "#B5BDAA", // Misty sage (adds subtle greenish hue)
+  "#D9B7A1", // Blush taupe (soft pinkish beige)
+  "#B7A8A0", // Warm ash gray (calm, neutral gray)
 ];
 
 const labels = [

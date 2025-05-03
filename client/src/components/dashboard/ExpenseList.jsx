@@ -46,7 +46,7 @@ const ExpenseList = ({ expenses, setExpenses }) => {
       ) : (
         <>
           <table className="table table-striped table-bordered">
-            <thead className="primary-bg">
+            <thead className="table-dark">
               <tr>
                 <th>Select</th>
                 <th>Title</th>

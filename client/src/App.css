@@ -1,37 +1,22 @@
-/* ====================
-   Global Styles
-==================== */
-
-/* Old Paper Background */
 body {
-    background-color: #f4f0ec; /* Antique White / Light Peach */
+    background-color: #f4f0ec;
     font-family: 'Arial', sans-serif;
     color: #333333; /* Regular dark text */
     margin: 0;
     padding: 0;
     min-height: 100vh;
   }
-  
-  /* ====================
-     Color Palette
-  ==================== */
-  
-  /* Primary Color: Burgundy */
+
   :root {
-    --primary-color: #2F4F4F;    /* Deep Burgundy */
-    --primary-light: #547474;    /* Soft Burgundy for buttons */
-    --secondary-color: #C9A86A;  /* Muted Gold */
-    --text-color: #333333;       /* Standard text */
-    --subtle-text: #5C5C5C;      /* Secondary text */
-    --background-color: #e7e7e7; /* Page background (old paper) */
-    --component-bg: #Fafafa;    /* Light component/card background */
-    --header-text: #F4f0ec;      /* White text */
-    --shadow-color: rgba(0, 0, 0, 0.1); /* Soft shadow */
+    --primary-color: #2F4F4F;    
+    --primary-light: #547474;    
+    --text-color: #333333;       
+    --subtle-text: #5C5C5C;    
+    --background-color: #e7e7e7; 
+    --component-bg: #Fafafa;   
+    --header-text: #F4f0ec;    
+    --shadow-color: rgba(0, 0, 0, 0.1); 
   }
-  
-  /* ====================
-     Header
-  ==================== */
   
   .header {
     background-color: var(--primary-color);
@@ -47,11 +32,6 @@ body {
     color: var(--header-text);
   }
   
-  /* ====================
-     Buttons
-  ==================== */
-  
-  /* Primary Button */
   .primary-btn {
     background-color: var(--primary-light);
     color: white;
@@ -70,28 +50,6 @@ body {
     box-shadow: 0 4px 12px var(--shadow-color);
   }
   
-  /* Secondary Button */
-  .secondary-btn {
-    background-color: var(--secondary-color);
-    color: white;
-    border: none;
-    border-radius: 6px;
-    padding: 10px 24px;
-    font-size: 16px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: background-color 0.3s ease, box-shadow 0.3s ease;
-  }
-  
-  .secondary-btn:hover {
-    background-color: #B98F52; /* Slightly darker muted gold */
-    box-shadow: 0 4px 12px var(--shadow-color);
-  }
-  
-  /* ====================
-     Typography
-  ==================== */
-  
   h1, h2, h3, h4, h5 {
     color: var(--primary-color);
   }
@@ -100,15 +58,11 @@ body {
     color: var(--text-color);
   }
   
-  /* Optional: Secondary text styling */
   .secondary-text {
     color: var(--subtle-text);
     font-size: 0.9rem;
   }
   
-  /* ====================
-     Home Page Styling
-  ==================== */
   
   .home-container {
     background-color: var(--background-color);
@@ -124,10 +78,7 @@ body {
   .home-container p {
     color: var(--subtle-text);
   }
-  
-  /* ====================
-     Components / Cards
-  ==================== */
+
   
   .card {
     background-color: var(--component-bg);
@@ -140,10 +91,6 @@ body {
     background-color: var(--primary-light);
     color: white;
   }
-  
-  /* ====================
-     Utility Classes
-  ==================== */
   
   .shadow-sm {
     box-shadow: 0 2px 4px var(--shadow-color);
@@ -158,11 +105,6 @@ body {
   }
   
   .card-header {
-    background-color: var(--primary-light);
-    color: white;
-  }
-
-  .primary-bg {
     background-color: var(--primary-light);
     color: white;
   }
