@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { createExpense } from "../../services/ExpenseService";
-import { getBudget } from "../../services/BudgetService";
 import { getMonthlySummary } from "../../services/SummaryService";
 
 const ExpenseForm = ({ fetchExpenses, categories }) => {
@@ -32,13 +31,10 @@ const ExpenseForm = ({ fetchExpenses, categories }) => {
       const month = dateObj.getMonth() + 1;
       const year = dateObj.getFullYear();
 
-      const [budgetData, totals] = await Promise.all([
-        getBudget(month, year, token),
-        getMonthlySummary(month, year, token),
-      ]);
+      const monthlySummary = await getMonthlySummary(month, year, token);
 
-      const categoryBudget = budgetData.budgets[finalCategory];
-      const updatedTotal = totals[finalCategory] || 0;
+      const categoryBudget = monthlySummary.categorySummary[finalCategory]["budget"];
+      const updatedTotal = monthlySummary.categorySummary[finalCategory]["spent"] || 0;
 
       if (categoryBudget) {
         const remaining = categoryBudget - updatedTotal;
