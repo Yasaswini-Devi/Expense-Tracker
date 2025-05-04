@@ -7,9 +7,16 @@ const Header = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    setIsLoggedIn(!!token);
-  }, []);
+    const checkLogin = () => {
+      const token = localStorage.getItem("token");
+      setIsLoggedIn(!!token);
+    };
+  
+    window.addEventListener("authChanged", checkLogin);
+    checkLogin(); // run initially
+  
+    return () => window.removeEventListener("authChanged", checkLogin);
+  }, []);  
 
   const handleLogout = () => {
     localStorage.removeItem("token");

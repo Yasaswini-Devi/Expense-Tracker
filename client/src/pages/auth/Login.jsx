@@ -24,6 +24,7 @@ const Login = () => {
     try {
       const res = await login(formData);
       localStorage.setItem("token", res.data.token); // Save token
+      window.dispatchEvent(new Event("authChanged"));
       navigate("/dashboard"); // Go to home or dashboard
     } catch (err) {
       setError(err.response?.data?.message || "Something went wrong");
